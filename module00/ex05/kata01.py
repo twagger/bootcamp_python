@@ -1,7 +1,7 @@
 languages = {
-	'Python' : 'Guido van Rossum',
-	'Ruby' : 'Yukihiro Matsumoto',
-	'PHP' : 'Rasmus Lerdorf',
+    'Python': 'Guido van Rossum',
+    'Ruby': 'Yukihiro Matsumoto',
+    'PHP': 'Rasmus Lerdorf',
 }
 for key in languages:
-	print(key + " was created by " + languages[key])
+    print(key + " was created by " + languages[key])
