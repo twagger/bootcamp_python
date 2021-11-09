@@ -44,7 +44,7 @@ elif len(sys.argv) == 3:
 	for arg in sys.argv:
 		if first:
 			first = False
-		elif arg.strip('-').isdecimal() == False:
+		elif not arg.strip('-').isdecimal():
 			print("InputError: only numbers")
 			sys.exit()
 	ft_sum(sys.argv[1], sys.argv[2])

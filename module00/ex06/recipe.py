@@ -73,7 +73,7 @@ def get_recipe_info():
 while True:
 	display_menu()
 	choice = input(">> ")
-	if choice.isnumeric() == False or \
+	if not choice.isnumeric() or \
 		(choice.isnumeric() and (int(choice) > 5 or int(choice) < 1)):
 		print('')
 		print("This option does not exist, ", end='')
