@@ -4,7 +4,7 @@ if len(sys.argv) > 2:
 	print('ERROR')
 elif len(sys.argv) < 2:
 	print('ERROR')
-elif sys.argv[1].isdecimal == False:
+elif sys.argv[1].strip('-').isdecimal() == False:
 	print('ERROR')
 elif int(sys.argv[1]) == 0:
 	print("I'm  Zero.")
