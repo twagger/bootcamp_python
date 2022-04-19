@@ -1,5 +1,5 @@
 pip list
-pip list
 pip show numpy
-pip search tesseract
+pip uninstall numpy
+pip install numpy
 pip freeze > requirements.txt
