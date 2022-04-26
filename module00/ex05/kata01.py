@@ -1,9 +1,9 @@
 # Put this at the top of your kata01.py file
 kata = {
-	'Python': 'Guido van Rossum',
-	'Ruby': 'Yukihiro Matsumoto',
-	'PHP': 'Rasmus Lerdorf',
+    'Python': 'Guido van Rossum',
+    'Ruby': 'Yukihiro Matsumoto',
+    'PHP': 'Rasmus Lerdorf',
 }
 
 for key, value in kata.items():
-	print("{} was created by {}".format(key, value))
+    print("{} was created by {}".format(key, value))
