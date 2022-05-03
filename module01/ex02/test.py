@@ -60,3 +60,71 @@ v2 = Vector([[2.0], [4.0], [8.0], [16.0]])
 print("V1\t: {}".format(v1.values))
 print("V2\t: {}".format(v2.values))
 print("Result of addition is : {}".format((v1 + v2).values))
+
+# STR on vector
+print("\n\033[1;35m--{}: {}--\033[0m".format("Test 10", "STR on row and column vector"))
+v1 = Vector([[0.0], [1.0], [2.0], [3.0]])
+v1 = Vector([[0.0, 1.0, 2.0, 3.0]])
+print(v1)
+print(v2)
+
+# init vector with size 3
+print("\n\033[1;35m--{}: {}--\033[0m".format("Test 11", "Init vector with size 3"))
+v1 = Vector(3)
+print(v1)
+print("Shape\t: {}".format(v1.shape))
+
+# init vector with range 10 - 18
+print("\n\033[1;35m--{}: {}--\033[0m".format("Test 12", "Init vector with range 10 - 18"))
+v1 = Vector((10, 18))
+print(v1)
+print("Shape\t: {}".format(v1.shape))
+
+# Substract
+print("\n\033[1;35m--{}: {}--\033[0m".format("Test 13", "Substract"))
+v1 = Vector([[0.0, 1.0, 2.0, 3.0]])
+v2 = Vector([[2.0, 4.0, 8.0, 16.0]])
+print(v1)
+print(v2)
+print(v1 - v2)
+
+# RSubstract
+print("\n\033[1;35m--{}: {}--\033[0m".format("Test 14", "RSubstract"))
+v1 = Vector([[0.0, 1.0, 2.0, 3.0]])
+v2 = Vector([[2.0, 4.0, 8.0, 16.0]])
+print(v1)
+print(v2)
+print(v1.__rsub__(v2))
+
+# TrueDiv
+print("\n\033[1;35m--{}: {}--\033[0m".format("Test 15", "TrueDiv"))
+v1 = Vector([[0.0, 1.0, 2.0, 3.0]])
+v2 = Vector([[0.0], [1.0], [2.0], [3.0]])
+print(v1)
+print(v1 / 2)
+print(v2)
+print(v2 / 2)
+
+# RTrueDiv
+print("\n\033[1;35m--{}: {}--\033[0m".format("Test 16", "RTrueDiv"))
+v1 = Vector([[0.0, 1.0, 2.0, 3.0]])
+print(v1)
+try:
+    print(v1.__rtruediv__(2))
+except Exception as e:
+    print(e)
+
+# Mul
+print("\n\033[1;35m--{}: {}--\033[0m".format("Test 17", "Mul"))
+v1 = Vector([[0.0, 1.0, 2.0, 3.0]])
+v2 = Vector([[0.0], [1.0], [2.0], [3.0]])
+print(v1)
+print(v1 * 2)
+print(v2)
+print(v2 * 2)
+
+# RMul
+print("\n\033[1;35m--{}: {}--\033[0m".format("Test 18", "RMul"))
+v1 = Vector([[0.0, 1.0, 2.0, 3.0]])
+print(v1)
+print(v1.__rmul__(2))
