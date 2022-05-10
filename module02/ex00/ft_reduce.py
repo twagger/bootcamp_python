@@ -9,7 +9,7 @@ def ft_reduce(function_to_apply, iterable):
     """
     try:
         if not callable(function_to_apply):
-            yield None
+            return None
         result = iterable[0]
         for item in iterable[1:]:
             result = function_to_apply(result, item)
