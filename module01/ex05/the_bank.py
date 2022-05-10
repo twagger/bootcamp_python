@@ -1,3 +1,5 @@
+from typing import Type
+from datetime import datetime
 import attr
 
 
@@ -24,8 +26,15 @@ class Account(object):
 
 def iscorrupted(account):
     try:
-        attributes = [attr for attr in dir(account)
-                      if not attr.startswith('__') and not attr.isupper()]
+        attributes = [a for a in dir(account)
+                      if not a.startswith('__')
+                      and not a.isupper()
+                      and not a == 'transfer']
+        # 
+        # print("NB attributes : {}".format(len(attributes)))
+        # for a in attributes:
+        #    print("- {}".format(a))
+        #
         if len(attributes) % 2 != 0:
             return True
         if any(a for a in attributes if a.startswith('b')):
@@ -43,6 +52,15 @@ def iscorrupted(account):
         return False
     except TypeError:
         raise TypeError("An Account is expected.")
+
+
+def remove_starting_b(name):
+    while name.startswith('b'):
+        name = name[1:]
+    if not name:
+        name = 'erased_name'
+    return name
+
 
 
 class Bank(object):
@@ -87,10 +105,73 @@ class Bank(object):
             return False
         except TypeError:
             return False
+        except AttributeError:
+            return False
 
     def fix_account(self, name):
         """ fix account associated to name if corrupted
             @name:  str(name) of the account
             @return True if success, False if an error occured
         """
-        # ... Your code ...
+        try:
+            acc = next((account for account in self.accounts
+                        if account.name == name), None)
+            if acc and iscorrupted(acc) == True:
+                attributes = [a for a in dir(acc)
+                              if not a.startswith('__')
+                              and not a.isupper()
+                              and not a == 'transfer']
+
+                # rename attributes starting with a b      
+                to_fix = [a for a in attributes if a.startswith('b')]
+                for a in to_fix:
+                    acc.__dict__[remove_starting_b(a)] = acc.__dict__.pop(a)
+
+                # add a zip or an addr attribute
+                if not any(a for a in attributes if a.startswith('zip') or a.startswith('addr')):
+                    acc.addr = "The Moon"
+
+                # add name, id and value if they are missing
+                if acc.name is None:
+                    acc.name = "Dummy " + datetime.now().strftime('%s')
+                if acc.id is None:
+                    acc.id = int(datetime.now().strftime('%s'))
+                if acc.value is None:
+                    acc.value = 0
+
+                # force name to be a string
+                if not isinstance(acc.name, str):
+                    try:
+                        acc.name = str(acc.name)
+                    except ValueError:
+                        acc.name = "Dummy " + datetime.now().strftime('%s')
+
+                # force id to be a int
+                if not isinstance(acc.id, int):
+                    try:
+                        acc.id = int(acc.id)
+                    except ValueError:
+                        acc.id = int(datetime.now().strftime('%s'))
+
+                # force value to be a float or an int
+                if not isinstance(acc.value, int) and not isinstance(acc.value, float):
+                    try:
+                        acc.value = float(acc.value)
+                    except ValueError:
+                        acc.value = 0
+                
+                attributes = [a for a in dir(acc)
+                              if not a.startswith('__')
+                              and not a.isupper()
+                              and not a == 'transfer']
+
+                # add a filler attribute
+                if len(attributes) % 2 == 1:
+                    acc.filler = "filler"
+
+                return True
+            return False
+        except TypeError:
+            return False
+        except AttributeError:
+            return False
