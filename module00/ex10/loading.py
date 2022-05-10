@@ -21,7 +21,7 @@ def ft_progress(lst):
                     end='\r')
             i += 1
             yield item
-    except:
+    except TypeError:
         raise TypeError("This is not a list")
 
 
