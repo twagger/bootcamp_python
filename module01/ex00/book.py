@@ -36,10 +36,11 @@ class Book:
 
     def add_recipe(self, recipe):
         """Add a recipe to the book and update last_update"""
-        if type(recipe) is not Recipe:
-            raise TypeError
-        for r_type, recipes in self.recipe_list.items():
-            if r_type == recipe.recipe_type:
-                recipes.append(recipe)
-                return
-        print(">> ERROR : type not found")
+        try:
+            for r_type, recipes in self.recipe_list.items():
+                if r_type == recipe.recipe_type:
+                    recipes.append(recipe)
+                    return
+            print(">> ERROR : type not found")
+        except:
+            raise TypeError("This is not a recipe")
