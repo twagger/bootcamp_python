@@ -42,5 +42,5 @@ class Book:
                     recipes.append(recipe)
                     return
             print(">> ERROR : type not found")
-        except:
+        except TypeError:
             raise TypeError("This is not a recipe")

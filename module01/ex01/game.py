@@ -1,5 +1,5 @@
 class GotCharacter:
-    
+
     def __init__(self, first_name, is_alive=True):
         self.first_name = first_name
         self.is_alive = is_alive
@@ -17,5 +17,4 @@ Or when bad things happen to good people."""
         print(self.house_words)
 
     def die(self):
-       self.is_alive = False
-
+        self.is_alive = False

@@ -15,7 +15,7 @@ class Recipe:
         txt = ""
         txt += "{}: \n".format(self.name)
         txt += "> Level : {} / Type : {}\n".format(self.cooking_lvl,
-                                                 self.recipe_type)
+                                                   self.recipe_type)
         txt += "> Ingredients : \n"
         for ingredient in self.ingredients:
             txt += "  - {}\n".format(ingredient)
