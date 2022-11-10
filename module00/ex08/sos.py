@@ -1,3 +1,4 @@
+"""This module encodes a string into Morse code"""
 import sys
 
 
@@ -42,17 +43,17 @@ morse = {
     " ": "/"
 }
 
-
-# Programm
-if len(sys.argv) >= 2:
+def main():
+    """Main program"""
     if len(sys.argv) >= 2:
         message = ' '.join(sys.argv[1:])
-    else:
-        message = sys.argv[1]
-    morsed = [morse[letter.upper()]
-              for letter in message if letter.upper() in morse]
-    wrong_char = [char for char in message if char.upper() not in morse]
-    if len(wrong_char) > 0:
-        print("ERROR")
-    else:
-        print(*morsed, sep=' ')
+        morsed = [morse[letter.upper()]
+                for letter in message if letter.upper() in morse]
+        wrong_char = [char for char in message if char.upper() not in morse]
+        if len(wrong_char) > 0:
+            print("ERROR")
+        else:
+            print(*morsed, sep=' ')
+
+
+main()
