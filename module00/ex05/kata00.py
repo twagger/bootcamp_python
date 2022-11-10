@@ -1,3 +1,4 @@
+"""Kata 00"""
 kata = (19, 42, 21)
 
-print("The {} numbers are: {}".format(len(kata), ', '.join(map(str, kata))))
+print(f"The {len(kata)} numbers are: {', '.join(map(str, kata))}")

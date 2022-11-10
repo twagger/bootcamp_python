@@ -1,4 +1,4 @@
-# Put this at the top of your kata03.py file
+"""Kata 03"""
 kata = "The right format"
 
-print("{:->42}".format(kata), end='')
+print(f'{kata:->42}', end='')

@@ -1,4 +1,4 @@
-# Put this at the top of your kata01.py file
+"""Kata 01"""
 kata = {
     'Python': 'Guido van Rossum',
     'Ruby': 'Yukihiro Matsumoto',
@@ -6,4 +6,4 @@ kata = {
 }
 
 for key, value in kata.items():
-    print("{} was created by {}".format(key, value))
+    print(f'{key} was created by {value}')

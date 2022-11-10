@@ -1,13 +1,19 @@
+"""This module checks if the provided argument is even or odd"""
 import sys
 
-# check arguments
+# check argument number
 if len(sys.argv) <= 1:
-    print("Usage: python whois.py [Argument]")
+    print("Usage: python whois.py <Argument>")
 elif len(sys.argv) >= 3:
     print("AssertionError: more than one argument are provided")
 else:
-    if sys.argv[1].isdigit() is False:
+    # check argument type
+    if not (
+        sys.argv[1].isdigit() is True
+        or ((sys.argv[1][0] == '-' or sys.argv[1][0] == '+')
+            and sys.argv[1][1:].isdigit() is True)):
         print("AssertionError: argument is not an integer")
+    # check if even, odd or zero
     elif int(sys.argv[1]) == 0:
         print("I'm Zero.")
     elif int(sys.argv[1]) % 2 == 0:
