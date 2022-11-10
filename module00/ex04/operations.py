@@ -31,26 +31,31 @@ def my_remainder(A, B):
     return A % B
 
 
-if len(sys.argv) == 1:
-    print("""Usage: python operations.py <number1> <number2>
-Example:
-    python operations.py 10 3""")
-elif len(sys.argv) < 3:
-    print("AssertionError: too few arguments")
-elif len(sys.argv) > 3:
-    print("AssertionError: too many arguments")
-else:
-    try:
-        VAL = int(sys.argv[1])
-        VAL = int(sys.argv[2])
-    except ValueError:
-        print("AssertionError: only integers")
+def main():
+    """Main program"""
+    if len(sys.argv) == 1:
+        print("""Usage: python operations.py <number1> <number2>
+    Example:
+        python operations.py 10 3""")
+    elif len(sys.argv) < 3:
+        print("AssertionError: too few arguments")
+    elif len(sys.argv) > 3:
+        print("AssertionError: too many arguments")
     else:
-        A = int(sys.argv[1])
-        B = int(sys.argv[2])
-        print(f'Sum:\t\t{my_sum(A, B)}\n'
-              f'Difference:\t{my_difference(A, B)}\n'
-              f'Product:\t{my_product(A, B)}\n'
-              f'Quotient:\t{my_quotient(A, B)}\n'
-              f'Remainder:\t{my_remainder(A, B)}'
-              )
+        try:
+            int(sys.argv[1])
+            int(sys.argv[2])
+        except ValueError:
+            print("AssertionError: only integers")
+        else:
+            A = int(sys.argv[1])
+            B = int(sys.argv[2])
+            print(f'Sum:\t\t{my_sum(A, B)}\n'
+                  f'Difference:\t{my_difference(A, B)}\n'
+                  f'Product:\t{my_product(A, B)}\n'
+                  f'Quotient:\t{my_quotient(A, B)}\n'
+                  f'Remainder:\t{my_remainder(A, B)}'
+                  )
+
+
+main()

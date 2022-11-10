@@ -16,13 +16,18 @@ def text_analyzer(text=''):
         print(f'The text contains {len(text)} character(s):\n'
               f'- {sum(1 for l in text if l.isupper())} upper letter(s)\n'
               f'- {sum(1 for l in text if l.islower())} lower letter(s)\n'
-              f'- {sum(1 for l in text if l in string.punctuation)} \
-punctiation mark(s)\n'
+              f'- {sum(1 for l in text if l in string.punctuation)}'
+              f' punctiation mark(s)\n'
               f'- {sum(1 for l in text if l.isspace())} space(s)'
               )
 
 
-if len(sys.argv) > 2:
-    print("Error: Only one argument is expected.")
-elif len(sys.argv) == 2:
-    text_analyzer(sys.argv[1])
+def main():
+    """Main program"""
+    if len(sys.argv) > 2:
+        print("Error: Only one argument is expected.")
+    elif len(sys.argv) == 2:
+        text_analyzer(sys.argv[1])
+
+
+main()

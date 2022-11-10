@@ -69,12 +69,14 @@ def delete_recipe(recipe_name):
     else:
         print("\033[1;31m>> Error : unknown recipe\033[0m")
 
+
 def prep_time_check(prep_time):
     """Checks if the preparation time is in the proper format"""
     if (prep_time.isdigit() is True
-        or ((prep_time[0] == '+') and prep_time[1:].isdigit() is True)):
+            or ((prep_time[0] == '+') and prep_time[1:].isdigit() is True)):
         return True
     return False
+
 
 def add_recipe_from_input():
     """Add recipe from input"""
@@ -87,7 +89,8 @@ def add_recipe_from_input():
     meal = input("\033[1;35m>>> Enter a meal type:\n\033[0m")
     prep_time = input("\033[1;35m>>> Enter a preparation time:\n\033[0m")
     while prep_time_check(prep_time) is False:
-        prep_time = input("\033[1;35m>>> Enter a proper preparation time:\n\033[0m")
+        prep_time = input(
+            "\033[1;35m>>> Enter a proper preparation time:\n\033[0m")
     cookbook[name] = {
         "ingredients": ingredients,
         "meal": meal,
@@ -124,11 +127,13 @@ def main():
                 add_recipe_from_input()
             elif choice == '2':
                 recipe_name = input(
-                    "\033[1;35mPlease enter the recipe name to delete:\n\033[0m>> ")
+                    "\033[1;35mPlease enter the recipe name to delete:\n"
+                    "\033[0m>> ")
                 delete_recipe(recipe_name)
             elif choice == '3':
                 recipe_name = input(
-                    "\033[1;35mPlease enter a recipe name to get its details:\n\033[0m>> ")
+                    "\033[1;35mPlease enter a recipe name to get its details:"
+                    "\n\033[0m>> ")
                 print_recipe_details(recipe_name)
             elif choice == '4':
                 print_all_recipe_names()
