@@ -1,9 +1,10 @@
+"""This module implements a loading bar on a list"""
 import time
-import textwrap
 
 
 # Progress bar on a list
 def ft_progress(lst):
+    """Function to add a loading bar when iterating through a list"""
     try:
         i = 1
         progress_bar_size = 30
@@ -15,21 +16,24 @@ def ft_progress(lst):
             curr_size = progress_bar_size * percent // 100
             progress_bar = ('=' * (int(curr_size) - 1)) + '>'
             eta = elapsed_time / (percent / 100)
-            print(textwrap.dedent("""\
-            ETA : {:5.2f}s [{:3.0f}%][{:30s}] {}/{} | elapsed time {:.2f}s\
-            """.format(eta, percent, progress_bar, i, lstlen, elapsed_time)),
-                    end='\r')
+            print(f'ETA : {eta:5.2f}s [{percent:3.0f}%][{progress_bar:30s}] '
+                  f'{i}/{lstlen} | elapsed time {elapsed_time:.2f}s', end='\r')
             i += 1
             yield item
-    except TypeError:
-        raise TypeError("This is not a list")
+    except TypeError as exc:
+        raise TypeError("This is not a list") from exc
 
 
 # Test program
-listy = range(3333)
-ret = 0
-for elem in ft_progress(listy):
-    ret += (elem + 3) % 5
-    time.sleep(0.01)
-print()
-print(ret)
+def main():
+    """Test program"""
+    listy = range(1000)
+    ret = 0
+    for elem in ft_progress(listy):
+        ret += (elem + 3) % 5
+        time.sleep(0.01)
+    print()
+    print(ret)
+
+
+main()
