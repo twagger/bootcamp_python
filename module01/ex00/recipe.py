@@ -1,4 +1,8 @@
+"""Recipe class"""
+
+
 class Recipe:
+    """Recipe class"""
 
     def __init__(self, name, cooking_lvl, ingredients,
                  recipe_type, description=''):
@@ -10,14 +14,13 @@ class Recipe:
 
     def __str__(self):
         """Return the string to print with the recipe info"""
-        if type(self.ingredients) is not list:
+        if not isinstance(self.ingredients, list):
             raise TypeError
         txt = ""
-        txt += "{}: \n".format(self.name)
-        txt += "> Level : {} / Type : {}\n".format(self.cooking_lvl,
-                                                   self.recipe_type)
-        txt += "> Ingredients : \n"
+        txt += f'{self.name}: \n'
+        txt += f'> Level : {self.cooking_lvl} / Type : {self.recipe_type}\n'
+        txt += '> Ingredients : \n'
         for ingredient in self.ingredients:
-            txt += "  - {}\n".format(ingredient)
-        txt += "> Description : \n - {}".format(self.description)
+            txt += f'  - {ingredient}\n'
+        txt += f'> Description : \n - {self.description}'
         return txt
