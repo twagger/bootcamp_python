@@ -27,11 +27,9 @@ class Vector:
             if self.shape[1] == 1:
                 return sum(self.values[i][0] * v_2.values[i][0]
                            for i in range(len(self.values)))
-            else:
-                return sum(self.values[0][i] * v_2.values[0][i]
+            return sum(self.values[0][i] * v_2.values[0][i]
                            for i in range(len(self.values[0])))
-        else:
-            raise AttributeError("Vectors don't have the same shape")
+        raise AttributeError("Vectors don't have the same shape")
 
     def T(self):
         """Transpose vector (row / column)"""
