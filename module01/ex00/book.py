@@ -28,8 +28,8 @@ class Book:
 
     def get_recipes_by_types(self, recipe_type):
         """Get all recipe names for a given recipe_type """
-        for recipe_type, recipes in self.recipe_list.items():
-            if recipe_type == recipe_type:
+        for r_type, recipes in self.recipe_list.items():
+            if r_type == recipe_type:
                 for recipe in recipes:
                     print(f'- {recipe.name}')
 
