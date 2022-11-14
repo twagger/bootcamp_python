@@ -1,3 +1,4 @@
+"""Test module"""
 from vector import Vector
 
 # Basic column Vector test
