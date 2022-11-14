@@ -34,7 +34,7 @@ def main():
 
     # Add another lunch and print all lunches
     print(
-        "\n\033[1;35m--Test 6: Add a new lunch and display all lunches--\033[0m")
+        "\n\033[1;35m--Test 6: Add a new lunch and print all lunches--\033[0m")
     cake = Recipe("cake", 1, ['Pate', 'oeufs'],
                   "lunch", "c'est pas dur non plus")
     book.add_recipe(cake)
@@ -46,5 +46,6 @@ def main():
         book.add_recipe('fries')
     except AttributeError:
         print(">> ERROR : wrong type, please provide a proper recipe")
+
 
 main()
