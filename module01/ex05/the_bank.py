@@ -53,7 +53,7 @@ def iscorrupted(account):
 
 
 def remove_starting_b(name):
-    """Format the """
+    """Fix the account removing the starting b on attribute"""
     while name.startswith('b'):
         name = name[1:]
     if not name:
@@ -97,8 +97,11 @@ class Bank(object):
                                if account.name == origin), None)
             dest_acc = next((account for account in self.accounts
                              if account.name == dest), None)
+            if amount < 0:
+                return False
             if origin_acc is not None and dest_acc is not None:
                 if origin_acc.value >= 0 and origin_acc.value >= amount:
+                    # Check if the accounts are corrupted
                     if iscorrupted(origin_acc) or iscorrupted(dest_acc):
                         return False
                     elif origin != dest:
