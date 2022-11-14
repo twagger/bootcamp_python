@@ -1,6 +1,5 @@
-from typing import Type
+"""Bank module"""
 from datetime import datetime
-import attr
 
 
 class Account(object):
@@ -21,25 +20,23 @@ class Account(object):
             raise AttributeError("Attribute name must be a str object.")
 
     def transfer(self, amount):
+        """Transfer amount to account"""
         self.value += amount
 
 
 def iscorrupted(account):
+    """Check if the account is corrupted"""
     try:
         attributes = [a for a in dir(account)
                       if not a.startswith('__')
                       and not a.isupper()
                       and not a == 'transfer']
-        # 
-        # print("NB attributes : {}".format(len(attributes)))
-        # for a in attributes:
-        #    print("- {}".format(a))
-        #
         if len(attributes) % 2 != 0:
             return True
         if any(a for a in attributes if a.startswith('b')):
             return True
-        if not any(a for a in attributes if a.startswith('zip') or a.startswith('addr')):
+        if not any(a for a in attributes if a.startswith('zip')
+                   or a.startswith('addr')):
             return True
         if not all(a in attributes for a in ['name', 'id', 'value']):
             return True
@@ -47,20 +44,21 @@ def iscorrupted(account):
             return True
         if not isinstance(account.id, int):
             return True
-        if not isinstance(account.value, int) and not isinstance(account.value, float):
+        if not isinstance(account.value, int) and not isinstance(account.value,
+                                                                 float):
             return True
         return False
-    except TypeError:
-        raise TypeError("An Account is expected.")
+    except TypeError as exc:
+        raise TypeError("An Account is expected.") from exc
 
 
 def remove_starting_b(name):
+    """Format the """
     while name.startswith('b'):
         name = name[1:]
     if not name:
         name = 'erased_name'
     return name
-
 
 
 class Bank(object):
@@ -74,12 +72,17 @@ class Bank(object):
             @new_account: Account() new account to append
             @return       True if success, False if an error occured
         """
+        # Type check
         if not isinstance(new_account, Account):
-            return (False)
+            return False
+        # Check if an account with the same name already exists
+        if any(account for account in self.accounts if account.name == new_account.name) is True:
+            print("Account already exists")
+            return False
         try:
             self.accounts.append(new_account)
         except IndexError:
-            return (False)
+            return False
         return True
 
     def transfer(self, origin, dest, amount):
@@ -116,19 +119,20 @@ class Bank(object):
         try:
             acc = next((account for account in self.accounts
                         if account.name == name), None)
-            if acc and iscorrupted(acc) == True:
+            if acc and iscorrupted(acc) is True:
                 attributes = [a for a in dir(acc)
                               if not a.startswith('__')
                               and not a.isupper()
                               and not a == 'transfer']
 
-                # rename attributes starting with a b      
+                # rename attributes starting with a b
                 to_fix = [a for a in attributes if a.startswith('b')]
                 for a in to_fix:
                     acc.__dict__[remove_starting_b(a)] = acc.__dict__.pop(a)
 
                 # add a zip or an addr attribute
-                if not any(a for a in attributes if a.startswith('zip') or a.startswith('addr')):
+                if not any(a for a in attributes if a.startswith('zip')
+                           or a.startswith('addr')):
                     acc.addr = "The Moon"
 
                 # add name, id and value if they are missing
@@ -154,12 +158,13 @@ class Bank(object):
                         acc.id = int(datetime.now().strftime('%s'))
 
                 # force value to be a float or an int
-                if not isinstance(acc.value, int) and not isinstance(acc.value, float):
+                if not isinstance(acc.value, int) and not isinstance(acc.value,
+                                                                     float):
                     try:
                         acc.value = float(acc.value)
                     except ValueError:
                         acc.value = 0
-                
+
                 attributes = [a for a in dir(acc)
                               if not a.startswith('__')
                               and not a.isupper()

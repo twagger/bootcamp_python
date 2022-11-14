@@ -1,6 +1,4 @@
-from tkinter import W
 from the_bank import Account, Bank
-
 
 if __name__ == "__main__":
     bank = Bank()
@@ -23,3 +21,4 @@ if __name__ == "__main__":
         print('Failed')
     else:
         print('Success')
+
