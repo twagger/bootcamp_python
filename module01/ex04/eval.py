@@ -1,5 +1,6 @@
 """Evaluator module"""
 
+
 class Evaluator:
     """Evaluator class"""
     def __init__(self):

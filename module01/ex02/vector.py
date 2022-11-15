@@ -4,6 +4,7 @@
 class Vector:
     """Vector class"""
     # Constructor
+
     def __init__(self, values):
         if isinstance(values, list):
             self.values = values
@@ -28,7 +29,7 @@ class Vector:
                 return sum(self.values[i][0] * v_2.values[i][0]
                            for i in range(len(self.values)))
             return sum(self.values[0][i] * v_2.values[0][i]
-                           for i in range(len(self.values[0])))
+                       for i in range(len(self.values[0])))
         raise AttributeError("Vectors don't have the same shape")
 
     def T(self):
@@ -53,7 +54,7 @@ class Vector:
                 return Vector([[rhs.values[i][0] + self.values[i][0]]
                               for i in range(len(self.values))])
             return Vector([[rhs.values[0][i] + self.values[0][i]
-                              for i in range(len(self.values[0]))]])
+                            for i in range(len(self.values[0]))]])
         raise AttributeError("Vectors don't have the same shape")
 
     def __sub__(self, rhs):
@@ -62,7 +63,7 @@ class Vector:
                 return Vector([[self.values[i][0] - rhs.values[i][0]]
                               for i in range(len(self.values))])
             return Vector([[self.values[0][i] - rhs.values[0][i]
-                              for i in range(len(self.values[0]))]])
+                            for i in range(len(self.values[0]))]])
         raise AttributeError("Vectors don't have the same shape")
 
     def __rsub__(self, rhs):
@@ -71,7 +72,7 @@ class Vector:
                 return Vector([[rhs.values[i][0] - self.values[i][0]]
                               for i in range(len(self.values))])
             return Vector([[rhs.values[0][i] - self.values[0][i]
-                              for i in range(len(self.values[0]))]])
+                            for i in range(len(self.values[0]))]])
         raise AttributeError("Vectors don't have the same shape")
 
     def __truediv__(self, scalar):

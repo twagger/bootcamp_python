@@ -1,3 +1,6 @@
+"""Reduce module"""
+
+
 def ft_reduce(function_to_apply, iterable):
     """Apply function of two arguments cumulatively.
     Args:
@@ -14,5 +17,5 @@ def ft_reduce(function_to_apply, iterable):
         for item in iterable[1:]:
             result = function_to_apply(result, item)
         return result
-    except TypeError as e:
-        return TypeError(e)
+    except TypeError as exc:
+        raise TypeError(exc) from exc

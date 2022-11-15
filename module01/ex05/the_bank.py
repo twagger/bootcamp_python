@@ -76,7 +76,8 @@ class Bank(object):
         if not isinstance(new_account, Account):
             return False
         # Check if an account with the same name already exists
-        if any(account for account in self.accounts if account.name == new_account.name) is True:
+        if any(account for account in self.accounts
+               if account.name == new_account.name) is True:
             print("Account already exists")
             return False
         try:

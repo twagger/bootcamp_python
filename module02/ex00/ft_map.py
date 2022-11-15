@@ -1,3 +1,6 @@
+"""Map module"""
+
+
 def ft_map(function_to_apply, iterable):
     """Map the function to all elements of the iterable.
     Args:
@@ -10,7 +13,7 @@ def ft_map(function_to_apply, iterable):
     try:
         if not callable(function_to_apply):
             yield None
-        for item in iterable: 
+        for item in iterable:
             yield function_to_apply(item)
-    except TypeError as e:
-        raise TypeError(e)
+    except TypeError as exc:
+        raise TypeError(exc) from exc
