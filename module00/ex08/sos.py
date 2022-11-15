@@ -44,8 +44,7 @@ morse = {
 }
 
 
-def main():
-    """Main program"""
+if __name__ == "__main__":
     if len(sys.argv) >= 2:
         message = ' '.join(sys.argv[1:])
         morsed = [morse[letter.upper()]
@@ -55,6 +54,3 @@ def main():
             print("ERROR")
         else:
             print(*morsed, sep=' ')
-
-
-main()

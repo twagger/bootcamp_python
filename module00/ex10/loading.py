@@ -24,9 +24,7 @@ def ft_progress(lst):
         raise TypeError("This is not a list") from exc
 
 
-# Test program
-def main():
-    """Test program"""
+if __name__ == "__main__":
     listy = range(1000)
     ret = 0
     for elem in ft_progress(listy):
@@ -34,6 +32,3 @@ def main():
         time.sleep(0.01)
     print()
     print(ret)
-
-
-main()

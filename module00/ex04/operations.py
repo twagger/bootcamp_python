@@ -31,8 +31,7 @@ def my_remainder(A, B):
     return A % B
 
 
-def main():
-    """Main program"""
+if __name__ == "__main__":
     if len(sys.argv) == 1:
         print("""Usage: python operations.py <number1> <number2>
     Example:
@@ -56,6 +55,3 @@ def main():
                   f'Quotient:\t{my_quotient(A, B)}\n'
                   f'Remainder:\t{my_remainder(A, B)}'
                   )
-
-
-main()

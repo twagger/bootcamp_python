@@ -17,8 +17,7 @@ def integer_check(integer):
     return False
 
 
-def main():
-    """Main program"""
+if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("Error: wrong number of arguments")
     elif integer_check(sys.argv[2]) is False:
@@ -29,6 +28,3 @@ def main():
         result = [word for word in words_no_punct if len(
             word) > int(sys.argv[2])]
         print(result)
-
-
-main()

@@ -2,7 +2,7 @@
 import random
 
 
-def main():
+if __name__ == "__main__":
     """Main program"""
     print("This is an interactive guessing game!\n"
           "You have to enter a number between 1 and 99 to find out the secret "
@@ -40,6 +40,3 @@ def main():
             print("Congratulations, you've got it !")
             print(f'You won in {trials} attempts!')
             break
-
-
-main()

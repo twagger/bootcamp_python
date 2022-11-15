@@ -112,9 +112,7 @@ def print_menu():
     print("\t5: Quit\n")
 
 
-# PROGRAM
-def main():
-    """Main program"""
+if __name__ == "__main__":
     choice = '0'
     while choice != '5':
         try:
@@ -144,6 +142,3 @@ def main():
         except EOFError:
             print('\n')
             continue
-
-
-main()

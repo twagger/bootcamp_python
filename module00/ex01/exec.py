@@ -2,8 +2,7 @@
 import sys
 
 
-def main():
-    """Main program"""
+if __name__ == "__main__":
     if len(sys.argv) == 1:
         print("Usage: python exec.py <Arguments> ...")
     else:
@@ -11,6 +10,3 @@ def main():
         result = result[::-1]
         result = result.swapcase()
         print(result)
-
-
-main()

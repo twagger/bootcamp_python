@@ -22,12 +22,8 @@ def text_analyzer(text=''):
               )
 
 
-def main():
-    """Main program"""
+if __name__ == "__main__":
     if len(sys.argv) > 2:
         print("Error: Only one argument is expected.")
     elif len(sys.argv) == 2:
         text_analyzer(sys.argv[1])
-
-
-main()

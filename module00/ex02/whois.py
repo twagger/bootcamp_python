@@ -2,8 +2,7 @@
 import sys
 
 
-def main():
-    """Main program"""
+if __name__ == "__main__":
     # check argument number
     if len(sys.argv) <= 1:
         print("Usage: python whois.py <Argument>")
@@ -23,6 +22,3 @@ def main():
             print("I'm Even.")
         else:
             print("I'm Odd.")
-
-
-main()
