@@ -1,26 +1,38 @@
 """Main module"""
-def what_are_the_vars(*args, **kwargs):
-    """Prints the vars"""
-    return ObjectC()
 
-# ... Your code here ...
+
+def what_are_the_vars(*args, **kwargs):
+    """Creates and returns an ObjectC instance from args"""
+    # Check if one of the kwarg can conflict with an arg
+    max_i = len(args)
+    for key, _ in kwargs.items():
+        if key.startswith('var_') and key[4:].isdigit():
+            if int(key[4:]) < max_i:
+                return None
+    return ObjectC(*args, **kwargs)
+
+
 class ObjectC(object):
     """ObjectC class"""
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Constructor"""
-        # ... Your code here ...
+        for idx, attr in enumerate(args):
+            setattr(self, 'var_' + str(idx), attr)
+        for key, value in kwargs.items():
+            setattr(self, key, value)
 
-    def doom_printer(self, obj):
-        """Doom printer"""
-        if obj is None:
-            print("ERROR")
-            print("end")
-            return
-        for attr in dir(obj):
-            if attr[0] != '_':
-                value = getattr(obj, attr)
-                print(f"{attr}: {value}")
+
+def doom_printer(obj):
+    """Doom printer"""
+    if obj is None:
+        print("ERROR")
         print("end")
+        return
+    for attr in dir(obj):
+        if attr[0] != '_':
+            value = getattr(obj, attr)
+            print(f"{attr}: {value}")
+    print("end")
 
 
 if __name__ == "__main__":
