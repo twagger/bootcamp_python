@@ -1,6 +1,6 @@
 """CSVReader module
 This module is about context manager and the with statement.
-A nice tutorial is available here : 
+A nice tutorial is available here :
 https://realpython.com/python-with-statement/#managing-resources-in-python
 """
 
@@ -61,14 +61,13 @@ class CsvReader():
         lines = self.file.readlines()
         # Build the resulting list
         result = [line.replace('\n', '').split(self.sep) for idx, line
-                in enumerate(lines[1:])
-                if idx >= self.skip_top and idx <= len(lines)
-                - self.skip_bottom - 1]
+                  in enumerate(lines[1:])
+                  if idx >= self.skip_top and idx <= len(lines)
+                  - self.skip_bottom - 1]
         # If Header is True
         if self.header is True and lines[0] is not None:
             result.insert(0, lines[0].replace('\n', '').split(self.sep))
         return result
-
 
     def getheader(self):
         """ Retrieves the header from csv file.
