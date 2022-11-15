@@ -1,4 +1,8 @@
-"""Logguer module"""
+"""Logguer module
+This module is about decorators.
+A nice tutorial is available here :
+https://realpython.com/primer-on-python-decorators/
+"""
 
 
 import time
@@ -22,11 +26,11 @@ def log(func):
         line = (f'({os.environ["USER"]})Running: '
                 f'{func.__doc__:<19}[ exec-time = {exec_time} ]\n')
         if os.path.isfile('./machine.log'):
-            log_file = open('./machine.log', 'a')
+            with open('./machine.log', 'a') as log_file:
+                log_file.write(line)
         else:
-            log_file = open('./machine.log', 'x')
-        log_file.write(line)
-        log_file.close()
+            with open('./machine.log', 'x') as log_file:
+                log_file.write(line)
         return res
     return wrapper
 
