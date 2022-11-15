@@ -5,7 +5,7 @@ import sys
 # Morse dictionnary
 morse = {
     "A": ".-",
-    "B": "----",
+    "B": "-...",
     "C": "-.-.",
     "D": "-..",
     "E": ".",
