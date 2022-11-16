@@ -1,11 +1,14 @@
 """Book class"""
 from datetime import date
-
+from recipe import Recipe
 
 class Book:
     """Recipe book class"""
 
     def __init__(self, name):
+        # Emptyness check
+        if name is None:
+            raise AttributeError("Name is mandatory")
         self.name = name
         self.creation_date = date.today()
         self.last_update = self.creation_date
@@ -24,7 +27,7 @@ class Book:
                     if recipe.name == name:
                         print(recipe)
                         return recipe
-        print(">> ERROR : recipe not found")
+        print("ERROR: recipe not found")
 
     def get_recipes_by_types(self, recipe_type):
         """Get all recipe names for a given recipe_type """
@@ -35,11 +38,9 @@ class Book:
 
     def add_recipe(self, recipe):
         """Add a recipe to the book and update last_update"""
-        try:
-            for recipe_type, recipes in self.recipe_list.items():
-                if recipe_type == recipe.recipe_type:
-                    recipes.append(recipe)
-                    return
-            print(">> ERROR : type not found")
-        except TypeError as exc:
-            raise TypeError("This is not a recipe") from exc
+        if not isinstance(recipe, Recipe):
+            raise TypeError("This is not a recipe")
+        for recipe_type, recipes in self.recipe_list.items():
+            if recipe_type == recipe.recipe_type:
+                recipes.append(recipe)
+
