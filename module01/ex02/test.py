@@ -15,14 +15,14 @@ print(f'Shape\t: {v1.shape}\nValues\t: {v1.values}')
 print("\n\033[1;35m--Test 3: Transpose a Row vector to a Column--\033[0m")
 v1 = Vector([[0.0, 1.0, 2.0, 3.0]])
 v2 = v1.T()
-print(f'Transposed vector shape is : {v2.shape}')
+print(f'Initial vector shape is : {v1.shape}')
 print(f'Shape\t: {v2.shape}\nValues\t: {v2.values}')
 
 # Transpose test Column to Row
 print("\n\033[1;35m--Test 4: Transpose a Column vector to a Row--\033[0m")
 v1 = Vector([[0.0], [1.0], [2.0], [3.0]])
 v2 = v1.T()
-print(f'Transposed vector shape is : {v2.shape}')
+print(f'Initial vector shape is : {v1.shape}')
 print(f'Shape\t: {v2.shape}\nValues\t: {v2.values}')
 
 # Dot product fail
@@ -41,7 +41,7 @@ v2 = Vector([[2.0], [4.0], [8.0], [16.0]])
 print(f'Dot product is : {v1.dot(v2)}')
 
 # Dot product of two row vectors
-print("\n\033[1;35m--Test 7: Dot product of two column vectors--\033[0m")
+print("\n\033[1;35m--Test 7: Dot product of two row vectors--\033[0m")
 v1 = Vector([[0.0, 1.0, 2.0, 3.0]])
 v2 = Vector([[2.0, 4.0, 8.0, 16.0]])
 print(f'Dot product is : {v1.dot(v2)}')
