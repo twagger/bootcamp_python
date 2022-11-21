@@ -3,8 +3,8 @@
 
 from typing import Union
 from typing import List
-import numpy as np
 import math
+import numpy as np
 
 Vector = List[Union[int, float, complex]]
 
