@@ -32,3 +32,11 @@ class CoffeeMachine():
         # Your code here
         # ...
 ```
+
+## Installation instructions
+
+You just have to launch build.sh :
+
+```bash
+$> chmod u+x build.sh && ./build.sh
+```
