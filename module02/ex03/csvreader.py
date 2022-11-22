@@ -36,7 +36,10 @@ class CsvReader():
         lines = self.file.readlines()
         previous = None
         for line in lines:
-            current = len(line.split(self.sep))
+            res = line.split(self.sep)
+            current = len(res)
+            if any(tst for tst in res if tst is None or tst == '\n'):
+                return None
             if previous is not None and previous != current:
                 return None
             previous = current
