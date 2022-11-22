@@ -9,6 +9,9 @@ python3 -m build
 # Build the .egg format
 python setup.py bdist_egg
 
+# Build the .whl format
+python setup.py bdist_wheel
+
 # Install the package
 pip install ./dist/my_minipack-1.0.0-py3-none-any.whl
 
