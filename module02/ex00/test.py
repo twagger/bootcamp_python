@@ -95,7 +95,7 @@ except TypeError as exc:
     print(f"{'Error from custom':<20}: {exc}")
 
 # REDUCE - Test 03
-print("\n\033[1;35m#REDUCE - Test 2 : ft_reduce with wrong type instead of the list\033[0m")
+print("\n\033[1;35m#REDUCE - Test 3 : ft_reduce with wrong type instead of the list\033[0m")
 x = 42
 try:
     print(f"{'Standard function':<20}: {reduce(lambda u, v: u + v, x)}")
@@ -107,7 +107,7 @@ except TypeError as exc:
     print(f"{'Error from custom':<20}: {exc}")
 
 # REDUCE - Test 04
-print("\n\033[1;35m#REDUCE - Test 2 : ft_reduce empty list\033[0m")
+print("\n\033[1;35m#REDUCE - Test 4 : ft_reduce empty list\033[0m")
 x = []
 try:
     print(f"{'Standard function':<20}: {reduce(lambda u, v: u + v, x)}")
