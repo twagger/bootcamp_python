@@ -18,7 +18,7 @@ class NumPyCreator():
         if not isinstance(lst, list):
             return None
         result = np.array(lst, dtype)
-        if len(result.shape) == 1:
+        if len(result) > 0 and isinstance(result[0], list):
             return None
         return result
 
@@ -43,7 +43,7 @@ class NumPyCreator():
             return None
         return np.array(itr, dtype)
 
-    def from_shape(self, shape: tuple, value: any = 0,
+    def from_shape(self, shape: tuple, value = 0,
                    dtype=None, *args, **kwargs) -> np.ndarray:
         """Create a numpy array from shape filled with the value"""
         if args or kwargs:
