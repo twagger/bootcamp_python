@@ -104,6 +104,13 @@ class ScrapBooker:
         -------
         This function should not raise any Exception.
         """
+        try:
+            if len(dim) != 2:
+                return None
+            first_step = self.juxtapose(array, dim[0], 0)
+            return self.juxtapose(first_step, dim[1], 1)
+        except (TypeError, IndexError, ValueError):
+            return None
 
 
 # Tests
@@ -158,6 +165,11 @@ if __name__ == '__main__':
     print("\n\033[1;35m--Test 7: Juxtapose horizontal--\033[0m")
     arr4 = np.array([[1, 2, 3],[4, 5, 6],[7, 8, 9]])
     print(sb.juxtapose(arr4, 2, 1))
+
+     # Mosaic tests
+    print("\n\033[1;35m--Test 8: Mosaic--\033[0m")
+    arr4 = np.array([[1, 2, 3],[4, 5, 6],[7, 8, 9]])
+    print(sb.mosaic(arr4, (2,3)))
 
     # Error management
     print("\n\033[1;35m--Test: Error management--\033[0m")
