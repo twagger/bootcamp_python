@@ -1,15 +1,12 @@
 """Image processor"""
 
 import numpy as np
-from PIL import Image, ImageShow
+from PIL import Image
+from matplotlib import pyplot as plt
 
 
 class ImageProcessor:
     """ImageProcessor"""
-
-    def __init__(self):
-        """Constructor"""
-        pass
 
     def load(self, path: str, *args, **kwargs) -> np.ndarray:
         """opens the PNG file specified by the path argument and returns an
@@ -23,12 +20,13 @@ class ImageProcessor:
             return None
         # Image loading
         try:
-           image = Image.open(path)
+            image_arr = np.array(Image.open(path))
         except FileNotFoundError as exc:
             print(f"Error: {exc}")
         # Image information
-        print(f"Loading image of dimensions {image.size[0]} x {image.size[1]}")
-        return np.array(image)
+        print(f"Loading image of dimensions "
+              f"{image_arr.shape[0]} x {image_arr.shape[1]}")
+        return image_arr
 
     def display(self, array: np.ndarray, *args, **kwargs):
         """takes a numpy array as an argument and displays the corresponding
@@ -36,10 +34,17 @@ class ImageProcessor:
         # Error management
         if args or kwargs:
             print("Error: load > wrong number of arguments")
-            return None
+            return
         if not isinstance(array, np.ndarray):
             print("Error: the input is not correct.")
         if len(array) > 0 and isinstance(array[0], list):
             print("Error: incorrect array")
-        image = Image.fromarray(array)
-        image.show()
+        # Show image
+        plt.imshow(array)
+        plt.show()
+
+
+if __name__ == '__main__':
+    ip = ImageProcessor()
+    image_array = ip.load('./42AI.png')
+    ip.display(image_array)
