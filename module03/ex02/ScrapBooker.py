@@ -31,9 +31,9 @@ class ScrapBooker:
         try:
             return np.array(array[
                                   position[0]:(position[0] + dim[0]),
-                                  position[1]:(position[1] + dim[1]),
-                                  :])
-        except (TypeError, IndexError):
+                                  position[1]:(position[1] + dim[1])
+                                  ])
+        except (TypeError, IndexError, ValueError):
             return None
 
     def thin(self,
@@ -57,12 +57,11 @@ class ScrapBooker:
         ------
         This function should not raise any Exception.
         """
-        #
-        # Example of a function with light parameter check
-        #
         try:
-            return 'toto'
-        except (TypeError, IndexError):
+            return np.delete(array,
+                             list(range(n - 1, array.shape[1 - axis], n)),
+                             1 - axis)
+        except (TypeError, IndexError, ValueError):
             return None
 
     def juxtapose(self, array, n, axis):
@@ -81,6 +80,13 @@ class ScrapBooker:
         -------
         This function should not raise any Exception.
         """
+        try:
+            if axis == 0:
+                return np.tile(array, (n, 1))
+            if axis == 1:
+                return np.tile(array, (1, n))
+        except (TypeError, IndexError, ValueError):
+            return None
 
     def mosaic(self, array, dim):
         """
@@ -106,31 +112,56 @@ if __name__ == '__main__':
 
     # Crop tests
     print("\033[1;35m--Test 1: Simple crop--\033[0m")
-    arr = np.arange(0, 450).reshape(10, 15, 3)
+    arr = np.arange(0, 25).reshape(5, 5)
     print(f'Before :\n{arr}\n')
-    print(f'After :\n{sb.crop(arr, (1, 1))}')
+    print(f'After :\n{sb.crop(arr, (3, 1))}')
 
     print("\n\033[1;35m--Test 2: Crop over dim--\033[0m")
-    arr = np.arange(0, 450).reshape(10, 15, 3)
+    arr = np.arange(0, 25).reshape(5, 5)
     print(f'Before :\n{arr}\n')
     print(f'After :\n{sb.crop(arr, (42, 42))}')
 
     print("\n\033[1;35m--Test 3: Crop new position--\033[0m")
-    arr = np.arange(0, 450).reshape(10, 15, 3)
+    arr = np.arange(0, 25).reshape(5, 5)
     print(f'Before :\n{arr}\n')
-    print(f'After :\n{sb.crop(arr, (8, 4), position=(1, 6))}')
+    print(f'After :\n{sb.crop(arr, (3, 1), position=(1, 0))}')
 
     print("\n\033[1;35m--Test 4: Crop over dim with new position--\033[0m")
-    arr = np.arange(0, 450).reshape(10, 15, 3)
+    arr = np.arange(0, 25).reshape(5, 5)
     print(f'Before :\n{arr}\n')
-    print(f'After :\n{sb.crop(arr, (42, 42), position=(6, 6))}')
+    print(f'After :\n{sb.crop(arr, (42, 42), position=(1, 0))}')
 
     print("\n\033[1;35m--Test 4: Crop over dim with out position--\033[0m")
-    arr = np.arange(0, 450).reshape(10, 15, 3)
+    arr = np.arange(0, 25).reshape(5, 5)
     print(f'Before :\n{arr}\n')
     print(f'After :\n{sb.crop(arr, (42, 42), position=(42, 42))}')
 
     print("\n\033[1;35m--Test 4: Crop wrong type--\033[0m")
-    arr = np.arange(0, 450).reshape(10, 15, 3)
+    arr = np.arange(0, 25).reshape(5, 5)
     print(f'Before :\n{arr}\n')
-    print(f'After :\n{sb.crop(arr, 42, position=(42, 42))}')
+    print(f'After :\n{sb.crop(arr, 42.42, position=(42, 42))}')
+
+    # Thin tests
+    print("\n\033[1;35m--Test 5: Thin--\033[0m")
+    arr2 = np.array("A B C D E F G H I".split() * 6).reshape(-1,9)
+    print(sb.thin(arr2, 3, 0))
+
+    print("\n\033[1;35m--Test 6: Thin--\033[0m")
+    arr3 = np.array([[var] * 10 for var in "ABCDEFG"])
+    print(sb.thin(arr3, 3, 1))
+
+    # Juxtapose tests
+    print("\n\033[1;35m--Test 7: Juxtapose vertical--\033[0m")
+    arr4 = np.array([[1, 2, 3],[4, 5, 6],[7, 8, 9]])
+    print(sb.juxtapose(arr4, 2, 0))
+
+    print("\n\033[1;35m--Test 7: Juxtapose horizontal--\033[0m")
+    arr4 = np.array([[1, 2, 3],[4, 5, 6],[7, 8, 9]])
+    print(sb.juxtapose(arr4, 2, 1))
+
+    # Error management
+    print("\n\033[1;35m--Test: Error management--\033[0m")
+    not_numpy_arr = [[1, 2, 3],[4, 5, 6],[7, 8, 9]]
+    print(sb.crop(not_numpy_arr, (1,2)))
+    print(sb.juxtapose(arr4, -2, 0))
+    print(sb.mosaic(arr4, (1, 2, 3)))
