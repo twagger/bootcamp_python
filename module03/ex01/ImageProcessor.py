@@ -1,5 +1,4 @@
 """Image processor"""
-
 import numpy as np
 from PIL import Image
 from matplotlib import pyplot as plt
@@ -44,6 +43,7 @@ class ImageProcessor:
         plt.show()
 
 
+# Tests
 if __name__ == '__main__':
     ip = ImageProcessor()
     image_array = ip.load('./42AI.png')
