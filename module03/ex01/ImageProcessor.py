@@ -14,7 +14,7 @@ class ImageProcessor:
         if args or kwargs:
             print("Error: load > wrong number of arguments")
             return None
-        if not isinstance(path, str):
+        if path is None or not isinstance(path, str):
             print("Error: load > a string is expected")
             return None
         # Image loading
@@ -36,8 +36,10 @@ class ImageProcessor:
             return
         if not isinstance(array, np.ndarray):
             print("Error: the input is not correct.")
-        if len(array) > 0 and isinstance(array[0], list):
+            return
+        if array.dtype is np.dtype('object'):
             print("Error: incorrect array")
+            return
         # Show image
         plt.imshow(array)
         plt.show()
