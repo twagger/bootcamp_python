@@ -63,7 +63,7 @@ class ColorFilter():
         """
         try:
             green = array.copy()
-            green[:, :, (0,2)] = 0
+            green[:, :, (0, 2)] = 0
             return green
         except (TypeError, IndexError, ValueError, AttributeError):
             return None
@@ -116,18 +116,15 @@ class ColorFilter():
             cell = array.copy()
 
             # create 4 multiplicators to create four thresholds of shades
-            # Here I create 6 value because 0 and 1 will have no effects
+            # here I create 6 value because 0 and 1 will have no effects
             shades = np.linspace(0, 1, 6)
 
             # apply the multiplicators on the proper pixels
             for level in shades:
-                cell[np.sum(cell, axis=2) / 3 < level * 100] = cell[np.sum(cell, axis=2) / 3 < level * 100] * level
+                cell[np.sum(cell, axis=2) / 3 < level *
+                     100] = cell[np.sum(cell, axis=2) / 3 < level * 100] * level
 
             return cell
-            # filter array to get new values for dark zones
-
-            # identifier 4 niveaux de pixels sombres dans le tableau, les applatir en utilisant les shades
-            # A "dark" pixel is one where (R+G+B)/3 < 10 (10 est un seuil, on peu en mettre un a 30 60, etc ...)
 
         except (TypeError, IndexError, ValueError, AttributeError):
             return None
@@ -229,7 +226,7 @@ if __name__ == '__main__':
 
     # Test : to_grayscale weighted
     grayscale_image_w = cf.to_grayscale(image, "w",
-                                      weights = [0.2126, 0.7152, 0.0722])
+                                        weights=[0.2126, 0.7152, 0.0722])
     ip.display(grayscale_image_w)
 
     # Test : to_grayscale mean
