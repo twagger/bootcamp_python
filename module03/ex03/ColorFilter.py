@@ -21,10 +21,9 @@ class ColorFilter():
         """
         try:
             inverted = array.copy()
-            for i in range(3):
-                inverted[:, :, i] = 0 - array[:, :, i]
+            inverted[:, :, (0, 1, 2)] = 0 - array[:, :, (0, 1, 2)]
             return inverted
-        except (TypeError, IndexError, ValueError):
+        except (TypeError, IndexError, ValueError, AttributeError):
             return None
 
     def to_blue(self, array):
@@ -42,10 +41,10 @@ class ColorFilter():
         This function should not raise any Exception.
         """
         try:
-            zeros = np.zeros(array.shape).astype(int)
+            zeros = np.zeros(array.shape, dtype=int)
             blue = np.dstack((zeros[:, :, :2], array[:, :, 2:]))
             return blue
-        except (TypeError, IndexError, ValueError):
+        except (TypeError, IndexError, ValueError, AttributeError):
             return None
 
     def to_green(self, array):
@@ -64,10 +63,9 @@ class ColorFilter():
         """
         try:
             green = array.copy()
-            for i in (0,2):
-                green[:, :, i] = 0
+            green[:, :, (0,2)] = 0
             return green
-        except (TypeError, IndexError, ValueError):
+        except (TypeError, IndexError, ValueError, AttributeError):
             return None
 
     def to_red(self, array):
@@ -88,10 +86,11 @@ class ColorFilter():
             green = self.to_green(array)
             blue = self.to_blue(array)
             red = array.copy()
-            for i in range(3):
-                red[:, :, i] = array[:, :, i] - green[:, :, i] - blue[:, :, i]
+            red[:, :, (0, 1, 2)] = (array[:, :, (0, 1, 2)]
+                                    - green[:, :, (0, 1, 2)]
+                                    - blue[:, :, (0, 1, 2)])
             return red
-        except (TypeError, IndexError, ValueError):
+        except (TypeError, IndexError, ValueError, AttributeError):
             return None
 
     def to_celluloid(self, array):
@@ -113,7 +112,25 @@ class ColorFilter():
         -------
         This function should not raise any Exception.
         """
-        return None
+        try:
+            cell = array.copy()
+
+            # create 4 multiplicators to create four thresholds of shades
+            # Here I create 6 value because 0 and 1 will have no effects
+            shades = np.linspace(0, 1, 6)
+
+            # apply the multiplicators on the proper pixels
+            for level in shades:
+                cell[np.sum(cell, axis=2) / 3 < level * 100] = cell[np.sum(cell, axis=2) / 3 < level * 100] * level
+
+            return cell
+            # filter array to get new values for dark zones
+
+            # identifier 4 niveaux de pixels sombres dans le tableau, les applatir en utilisant les shades
+            # A "dark" pixel is one where (R+G+B)/3 < 10 (10 est un seuil, on peu en mettre un a 30 60, etc ...)
+
+        except (TypeError, IndexError, ValueError, AttributeError):
+            return None
 
     def to_grayscale(self, array, filter, **kwargs):
         """
@@ -147,24 +164,22 @@ class ColorFilter():
             # weights
             elif filter == "w":
                 # manage weights
-                weights = None
-                for key, value in kwargs.items():
-                    if (key == 'weights'):
-                        weights = np.array(value)
-                if weights is None:
+                weights = [None if key != 'weights' else value
+                           for key, value in kwargs.items()]
+                if len(weights) == 0:
                     return None
 
                 # Graying the image with the weighs
-                dotted = np.sum(array[:, :, :3] * weights, axis=2)
+                dotted = np.sum(array[:, :, :3] * weights[0], axis=2)
                 for i in range(3):
                     grayed[:, :, i] = dotted
 
             else:
                 return None
-            
+
             return grayed
 
-        except (TypeError, IndexError, ValueError):
+        except (TypeError, IndexError, ValueError, AttributeError):
             return None
 
 
@@ -198,9 +213,19 @@ if __name__ == '__main__':
     red_image = cf.to_red(image)
     ip.display(red_image)
 
-    # # Test : to_celluloid
-    # celluloid_image = cf.to_celluloid(image)
-    # ip.display(celluloid_image)
+    # Test : to_celluloid
+    image2 = ip.load('./not_musk.png')
+    celluloid_image = cf.to_celluloid(image2)
+    ip.display(celluloid_image)
+
+    # Test : to_celluloid
+    image3 = ip.load('./toon_shader.jpg')
+    celluloid_image = cf.to_celluloid(image3)
+    ip.display(celluloid_image)
+
+    # Test : to_celluloid
+    celluloid_image = cf.to_celluloid(image)
+    ip.display(celluloid_image)
 
     # Test : to_grayscale weighted
     grayscale_image_w = cf.to_grayscale(image, "w",
