@@ -17,11 +17,14 @@ class ImageProcessor:
         if path is None or not isinstance(path, str):
             print("Error: load > a string is expected")
             return None
+            
         # Image loading
         try:
             image_arr = np.array(Image.open(path))
         except FileNotFoundError as exc:
             print(f"Error: {exc}")
+            return None
+        
         # Image information
         print(f"Loading image of dimensions "
               f"{image_arr.shape[0]} x {image_arr.shape[1]}")
