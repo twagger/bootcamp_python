@@ -22,7 +22,7 @@ class ColorFilter():
         try:
             inverted = array.copy()
             for i in range(3):
-                inverted[:, :, i] = array[:, :, i] * -1
+                inverted[:, :, i] = 0 - array[:, :, i]
             return inverted
         except (TypeError, IndexError, ValueError):
             return None
@@ -43,8 +43,8 @@ class ColorFilter():
         """
         try:
             zeros = np.zeros(array.shape).astype(int)
-            blued = np.dstack((zeros[:, :, :1], array[:, :, 2:]))
-            return blued
+            blue = np.dstack((zeros[:, :, :2], array[:, :, 2:]))
+            return blue
         except (TypeError, IndexError, ValueError):
             return None
 
@@ -63,10 +63,10 @@ class ColorFilter():
         This function should not raise any Exception.
         """
         try:
-            greened = array.copy()
+            green = array.copy()
             for i in (0,2):
-                greened[:, :, i] = 0
-            return greened
+                green[:, :, i] = 0
+            return green
         except (TypeError, IndexError, ValueError):
             return None
 
@@ -85,10 +85,12 @@ class ColorFilter():
         This function should not raise any Exception.
         """
         try:
-            reded = array.copy()
-            for i in (1,2):
-                reded[:, :, i] = 0
-            return reded
+            green = self.to_green(array)
+            blue = self.to_blue(array)
+            red = array.copy()
+            for i in range(3):
+                red[:, :, i] = array[:, :, i] - green[:, :, i] - blue[:, :, i]
+            return red
         except (TypeError, IndexError, ValueError):
             return None
 
@@ -132,7 +134,38 @@ class ColorFilter():
         -------
         This function should not raise any Exception.
         """
-        return None
+        try:
+            grayed = 1 * array
+
+            # mean
+            if filter == "m":
+                # mean the 3 colors of each pixel
+                meaned = np.sum(array[:, :, :3], axis=2) / 3
+                for i in range(3):
+                    grayed[:, :, i] = meaned
+
+            # weights
+            elif filter == "w":
+                # manage weights
+                weights = None
+                for key, value in kwargs.items():
+                    if (key == 'weights'):
+                        weights = np.array(value)
+                if weights is None:
+                    return None
+
+                # Graying the image with the weighs
+                dotted = np.sum(array[:, :, :3] * weights, axis=2)
+                for i in range(3):
+                    grayed[:, :, i] = dotted
+
+            else:
+                return None
+            
+            return grayed
+
+        except (TypeError, IndexError, ValueError):
+            return None
 
 
 if __name__ == '__main__':
@@ -140,7 +173,7 @@ if __name__ == '__main__':
     import sys
     sys.path.insert(1, '../ex01/')
     from ImageProcessor import ImageProcessor
-    
+
     # Initialize objects
     ip = ImageProcessor()
     cf = ColorFilter()
@@ -165,10 +198,15 @@ if __name__ == '__main__':
     red_image = cf.to_red(image)
     ip.display(red_image)
 
-    # Test : to_celluloid
-    celluloid_image = cf.to_celluloid(image)
-    ip.display(celluloid_image)
+    # # Test : to_celluloid
+    # celluloid_image = cf.to_celluloid(image)
+    # ip.display(celluloid_image)
 
-    # Test : to_grayscale
-    grayscale_image = cf.to_grayscale(image, "w", weights = [0.2126, 0.7152, 0.0722])
-    ip.display(grayscale_image)
+    # Test : to_grayscale weighted
+    grayscale_image_w = cf.to_grayscale(image, "w",
+                                      weights = [0.2126, 0.7152, 0.0722])
+    ip.display(grayscale_image_w)
+
+    # Test : to_grayscale mean
+    grayscale_image_m = cf.to_grayscale(image, "m")
+    ip.display(grayscale_image_m)
