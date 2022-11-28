@@ -8,6 +8,7 @@ __pycache__/
 # Misc
 .vscode
 .gitignore
+.ipynb_checkpoints
 
 # Distribution / packaging
 bin/
