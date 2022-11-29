@@ -23,11 +23,47 @@ class KmeansClustering:
         dist_matrix = dist_matrix.reshape(
             dataset.shape[0], self.centroids.shape[0])
 
-        # - get the shortest distance index on a new matrix
+        # get the shortest distance index on a new matrix
         return np.argmin(dist_matrix, axis=1).reshape(dataset.shape[0], 1)
 
+    def __calculate_sse(self, dataset, clusters):
+        """
+        calculate the Sum of Squared errors from the centroïds stored on the
+        object and the dataset and clusters in parameters.
+        """
+        ### Reste a faire le calcul du sse (voir formule)
+        return 6
 
     # public functions
+    def do_multiple_kmeans(self, dataset, iterations: int = 10):
+        """
+        perform K-means multiple time and return the best centroïd array
+        according to the SSE value
+        """
+        # init a global sse array with all information from iterations
+        sse = np.empty((0, int(self.ncentroid), 4), dtype=np.float32)
+        for _ in range(iterations):
+            # get a set of stable centroids
+            self.fit(dataset)
+            # get the cluster id for each dataset row
+            clusters = self.predict(dataset)
+            # calculate sse
+            current_sse = self.__calculate_sse(dataset, clusters)
+            # concatenate sse and centroids in a single array
+            current_sse_centroid = np.hstack(
+                     (np.full((self.centroids.shape[0], 1), current_sse),
+                      self.centroids))
+            current_sse_centroid = np.expand_dims(current_sse_centroid, axis=0)
+
+            # add the current set to the global sse array
+            sse = np.vstack((sse, current_sse_centroid))
+    
+        # remove the first uninitialized row
+        sse = sse[1:, :, :]
+
+        # pick the subset with the lowest sse and store the corresponding 
+        # centroids in the class
+
     def fit(self, X):  # entraine sur les donnees
         """
         Run the K-means clustering algorithm.
@@ -122,8 +158,8 @@ def main(**kwargs):
     kmc = KmeansClustering(max_iter=max_iter, ncentroid=ncentroid)
 
     # 6. fit the Kmeans using the dataset
-    kmc.fit(data)
-    
+    kmc.do_multiple_kmeans(data)
+
     # 6bis. multiple Kmeans to select good centroids
 
     # 7. predict using the dataset to get the cluster indexes
