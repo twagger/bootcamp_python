@@ -13,7 +13,6 @@ class KmeansClustering:
         self.max_iter = max_iter  # number of max iter to update the centroids
         self.centroids = []  # values of the centroids
 
-    # private functions
     def ___get_cluster_indexes(self, dataset):
         """returns a ndarray with the proper cluster index for each row"""
         # create a new matrix with the distance from each centroid
@@ -31,15 +30,28 @@ class KmeansClustering:
         calculate the Sum of Squared errors from the centroïds stored on the
         object and the dataset and clusters in parameters.
         """
-        ### Reste a faire le calcul du sse (voir formule)
-        return 6
+        # create an assigned set from the dataset
+        cluster_indexes = self.___get_cluster_indexes(dataset)
+        assigned_set = np.concatenate((dataset, cluster_indexes), axis=1)
+        centroids = np.array(self.centroids)
+        # calculate the sse part for each dataset entry
+        sse_by_row = [[
+            np.sum((ds[:-1] - centroids[i, :])**2)
+            for ds in assigned_set[assigned_set[:, 3] == i]
+        ]
+            for i in range(int(self.ncentroid))
+        ]
+        # sum the sse by centroid
+        sse_by_centroid = np.array([np.sum(sse_part) for sse_part in sse_by_row])
+        # sum the sse on the entire set
+        sse = np.sum(sse_by_centroid)
+        return sse
 
-    # public functions
-    def do_multiple_kmeans(self, dataset, iterations: int = 10):
+    def do_multiple_kmeans(self, dataset, iterations: int = 30):
         """
         perform K-means multiple time and return the best centroïd array
-        according to the SSE value
-        """
+        according to the SSE values
+        """,
         # init a global sse array with all information from iterations
         sse = np.empty((0, int(self.ncentroid), 4), dtype=np.float32)
         for _ in range(iterations):
@@ -49,20 +61,22 @@ class KmeansClustering:
             clusters = self.predict(dataset)
             # calculate sse
             current_sse = self.__calculate_sse(dataset, clusters)
+            print(current_sse)
             # concatenate sse and centroids in a single array
             current_sse_centroid = np.hstack(
-                     (np.full((self.centroids.shape[0], 1), current_sse),
-                      self.centroids))
+                (np.full((self.centroids.shape[0], 1), current_sse),
+                 self.centroids))
             current_sse_centroid = np.expand_dims(current_sse_centroid, axis=0)
+            print(current_sse_centroid)
 
             # add the current set to the global sse array
             sse = np.vstack((sse, current_sse_centroid))
-    
-        # remove the first uninitialized row
-        sse = sse[1:, :, :]
 
-        # pick the subset with the lowest sse and store the corresponding 
-        # centroids in the class
+        # find the lowest sse
+        lowest_sse = sse[:, :, 0].min()
+        # filter the global matrix to keep only the best set of centroids
+        self.centroids = sse[sse[:, :, 0] == lowest_sse][:4, 1:]
+        print(self.centroids)
 
     def fit(self, X):  # entraine sur les donnees
         """
@@ -159,8 +173,6 @@ def main(**kwargs):
 
     # 6. fit the Kmeans using the dataset
     kmc.do_multiple_kmeans(data)
-
-    # 6bis. multiple Kmeans to select good centroids
 
     # 7. predict using the dataset to get the cluster indexes
     cluster_prediction = kmc.predict(data)
