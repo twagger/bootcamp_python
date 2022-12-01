@@ -139,19 +139,21 @@ class KmeansClustering:
         """display one global 3d view of the dataset with clusters"""
         # concatenate dataset and cluster
         labelled_data = np.concatenate((dataset, clusters), axis=1)
+        # display data
         fig = plt.figure()
         ax = fig.add_subplot(projection='3d')
         for i in range(int(self.ncentroid)):
             data = labelled_data[labelled_data[:, 3] == i]
             ax.scatter(data[:, 0], data[:, 1], data[:, 2], marker='o',
-                       label=labels[i])
+                       label=labels[i] if labels else None)
         for centroid in self.centroids:
             ax.scatter(centroid[0], centroid[1], centroid[2], marker='x',
                        color='0')
         ax.set_xlabel('height')
         ax.set_ylabel('weight')
         ax.set_zlabel('bone density')
-        plt.legend()
+        if labels:
+            plt.legend()
         plt.show()
 
     def fit(self, X):  # entraine sur les donnees
