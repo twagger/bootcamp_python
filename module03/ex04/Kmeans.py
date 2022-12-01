@@ -107,6 +107,53 @@ class KmeansClustering:
 
         return labels
 
+    def display_infos(self, clusters, labels):
+        """Display information about centroids and number of individuals"""
+        print(f'{"":-<4}{"":-<10}{"":-<10}{"":-<20}{"":-<20}{"":-<20}')
+        print(f'{"id":<4}{"region":<10}{"indiv.":<10}{"height":<20}'
+              f'{"weight":<20}{"density":<20}')
+        print(f'{"":-<4}{"":-<10}{"":-<10}{"":-<20}{"":-<20}{"":-<20}')
+
+        [print(f'{index:<4}{labels[index] if labels else "":<10}'
+               f'{np.count_nonzero(clusters == index):<10}'
+               f'{height:<20}{weight:<20}{density:<20}')
+        for index, (height, weight, density) in enumerate(self.centroids)]
+        
+        print(f'{"":-<4}{"":-<10}{"":-<10}{"":-<20}{"":-<20}{"":-<20}')
+
+    def display_2d(self, dataset, clusters, labels):
+        """display 3 differents plots"""
+        plt.figure()
+        plt.subplot(3,1,1)
+        plt.plot()
+        plt.title('height')
+        plt.subplot(3,1,2)
+        plt.plot()
+        plt.title('weight')
+        plt.subplot(3,1,3)
+        plt.plot()
+        plt.title('bone density')
+        plt.show()
+
+    def display_3d(self, dataset, clusters, labels):
+        """display one global 3d view of the dataset with clusters"""
+        # concatenate dataset and cluster
+        labelled_data = np.concatenate((dataset, clusters), axis=1)
+        fig = plt.figure()
+        ax = fig.add_subplot(projection='3d')
+        for i in range(int(self.ncentroid)):
+            data = labelled_data[labelled_data[:, 3] == i]
+            ax.scatter(data[:, 0], data[:, 1], data[:, 2], marker='o',
+                       label=labels[i])
+        for centroid in self.centroids:
+            ax.scatter(centroid[0], centroid[1], centroid[2], marker='x',
+                       color='0')
+        ax.set_xlabel('height')
+        ax.set_ylabel('weight')
+        ax.set_zlabel('bone density')
+        plt.legend()
+        plt.show()
+
     def fit(self, X):  # entraine sur les donnees
         """
         Run the K-means clustering algorithm.
@@ -179,6 +226,15 @@ def main(**kwargs):
     # 2. assigning parameters
     (_, filepath), (_, ncentroid), (_, max_iter) = kwargs.items()
 
+    # 2bis. range check on numeric parameters
+    try:
+        if int(ncentroid) <= 0 or int(max_iter) <= 0:
+            print("Error: wrong value for ncentroid or max_iter")
+            return None
+    except ValueError:
+        print("Error: wrong value for ncentroid or max_iter")
+        return None
+
     # 3. open and load data file
     rows = []
     try:
@@ -195,7 +251,11 @@ def main(**kwargs):
         return None
 
     # 4. data to nd array
-    dataset = np.array(rows, dtype=float)[:, 1:]
+    try:
+        dataset = np.array(rows, dtype=float)[:, 1:]
+    except ValueError:
+        print("Error: the file is corrupted")
+        return None
 
     # 5. create a Kmeans clustering object
     kmc = KmeansClustering(max_iter=max_iter, ncentroid=ncentroid)
@@ -204,41 +264,19 @@ def main(**kwargs):
     kmc.do_multiple_kmeans(dataset)
 
     # 7. predict using the dataset to get the cluster indexes
-    prediction = kmc.predict(dataset)
+    clusters = kmc.predict(dataset)
 
     # 8. associate region if ncentroids == 4
-    labels = None
-    if int(ncentroid) == 4:
-        labels = kmc.get_region()
+    labels = kmc.get_region() if int(ncentroid) == 4 else None
 
-    # 8. display detailed information
-    print(f'{"":-<4}{"":-<10}{"":-<10}{"":-<20}{"":-<20}{"":-<20}')
-    print(f'{"id":<4}{"region":<10}{"indiv.":<10}{"height":<20}{"weight":<20}{"density":<20}')
-    print(f'{"":-<4}{"":-<10}{"":-<10}{"":-<20}{"":-<20}{"":-<20}')
-
-    [print(f'{index:<4}{labels[index] if labels else "":<10}{np.count_nonzero(prediction == index):<10}{height:<20}{weight:<20}{density:<20}')
-     for index, (height, weight, density) in enumerate(kmc.centroids)]
-    
-    print(f'{"":-<4}{"":-<10}{"":-<10}{"":-<20}{"":-<20}{"":-<20}')
+    # 8. display information
+    kmc.display_infos(clusters, labels)
 
     # 9. 2D plot the clusters
+    kmc.display_2d(dataset, clusters, labels)
 
     # 10. 3D plot the clusters
-    # fig = plt.figure()
-    # ax = fig.add_subplot(projection='3d')
-
-    # for m, zlow, zhigh in [('o', -50, -25), ('^', -30, -5)]:
-    #     xs = randrange(n, 23, 32)
-    #     ys = randrange(n, 0, 100)
-    #     zs = randrange(n, zlow, zhigh)
-    #     ax.scatter(xs, ys, zs, marker=m)
-    # ax.set_xlabel('height')
-    # ax.set_ylabel('weight')
-    # ax.set_zlabel('bone density')
-    # plt.show()
-
-    # X. label the clusters
-    # labels = ['Venus', 'Earth', 'Mars', 'Belt']
+    kmc.display_3d(dataset, clusters, labels)
 
 
 if __name__ == '__main__':
