@@ -75,7 +75,7 @@ class KmeansClustering:
         # find the lowest sse
         lowest_sse = sse[:, :, 0].min()
         # filter the global matrix to keep only the best set of centroids
-        self.centroids = sse[sse[:, :, 0] == lowest_sse][:4, 1:]
+        self.centroids = sse[sse[:, :, 0] == lowest_sse][:int(self.ncentroid), 1:]
 
     def get_region(self):
         """
@@ -216,7 +216,7 @@ def main(**kwargs):
     print(f'{"id":<4}{"region":<10}{"indiv.":<10}{"height":<20}{"weight":<20}{"density":<20}')
     print(f'{"":-<4}{"":-<10}{"":-<10}{"":-<20}{"":-<20}{"":-<20}')
 
-    [print(f'{index:<4}{labels[index]:<10}{np.count_nonzero(prediction == index):<10}{height:<20}{weight:<20}{density:<20}')
+    [print(f'{index:<4}{labels[index] if labels else "":<10}{np.count_nonzero(prediction == index):<10}{height:<20}{weight:<20}{density:<20}')
      for index, (height, weight, density) in enumerate(kmc.centroids)]
     
     print(f'{"":-<4}{"":-<10}{"":-<10}{"":-<20}{"":-<20}{"":-<20}')
