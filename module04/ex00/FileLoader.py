@@ -2,7 +2,7 @@
 import pandas as pd
 
 
-class Fileloader():
+class FileLoader():
     """Fileloader class"""
 
     def load(self, path: str, *args, **kwargs) -> pd.DataFrame:
@@ -45,7 +45,7 @@ class Fileloader():
             print("Error: load > a panda dataframe is expected")
             return None
         if n is None or not isinstance(n, int):
-            print("Error: load > a panda dataframe is expected")
+            print("Error: load > an int is expected")
             return None
 
         if n >= 0:
