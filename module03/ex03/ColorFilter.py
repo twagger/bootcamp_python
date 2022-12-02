@@ -21,7 +21,7 @@ class ColorFilter():
         """
         try:
             inverted = array.copy()
-            inverted[:, :, (0, 1, 2)] = 0 - array[:, :, (0, 1, 2)]
+            inverted[:, :, (0, 1, 2)] = 1 - array[:, :, (0, 1, 2)]
             return inverted
         except (TypeError, IndexError, ValueError, AttributeError):
             return None
