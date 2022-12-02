@@ -1,6 +1,5 @@
 """Youngest Fellah"""
 import pandas as pd
-import numpy as np
 
 
 def youngestfellah(df: pd.DataFrame, year: int):
@@ -9,8 +8,8 @@ def youngestfellah(df: pd.DataFrame, year: int):
     and man who took part in the Olympics on that year.
     """
     df_year = df[df['Year'] == year]
-    min_man = np.min(df_year[df_year['Sex'] == 'M']['Age'])
-    min_woman = np.min(df_year[df_year['Sex'] == 'F']['Age'])
+    min_man = df_year[df_year['Sex'] == 'M']['Age'].min()
+    min_woman = df_year[df_year['Sex'] == 'F']['Age'].min()
     return { 'f': min_woman, 'm': min_man}
 
 if __name__ == '__main__':
