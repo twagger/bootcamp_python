@@ -2,7 +2,8 @@
 import pandas as pd
 
 
-def youngestfellah(df: pd.DataFrame, year: int) -> dict:
+def proportion_by_sport(df: pd.DataFrame,
+                        year: int, sport: str, gender: str) -> float:
     """
     The function returns a dictionary containing the age of the youngest woman
     and man who took part in the Olympics on that year.
@@ -15,21 +16,18 @@ def youngestfellah(df: pd.DataFrame, year: int) -> dict:
 if __name__ == '__main__':
     
     # Import file loader
-    import sys
-    sys.path.insert(1, '../ex00/')
     from FileLoader import FileLoader
 
     loader = FileLoader()
     data = loader.load("../athlete_events.csv")
 
-    print(youngestfellah(data, 1992))
-    # output is: "{'f': 12.0, 'm': 11.0}"
+    print("")
 
-    print(youngestfellah(data, 2004))
-    # output is: "{'f': 13.0, 'm': 14.0}"
+    print(proportion_by_sport(data, 2004, 'Tennis', 'F'), end = "\n\n")
+    # output is "0.02307"
 
-    print(youngestfellah(data, 2010))
-    # output is: "{'f': 15.0, 'm': 15.0}"
+    print(proportion_by_sport(data, 2008, 'Hockey', 'F'), end = "\n\n")
+    # output is  "0.03284"
 
-    print(youngestfellah(data, 2003))
-    # output is: "{'f': nan, 'm': nan}"
+    print(proportion_by_sport(data, 1964, 'Biathlon', 'M'), end = "\n\n")
+    # output is "0.00659"
