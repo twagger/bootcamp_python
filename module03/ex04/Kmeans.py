@@ -75,7 +75,8 @@ class KmeansClustering:
         # find the lowest sse
         lowest_sse = sse[:, :, 0].min()
         # filter the global matrix to keep only the best set of centroids
-        self.centroids = sse[sse[:, :, 0] == lowest_sse][:int(self.ncentroid), 1:]
+        self.centroids = sse[sse[:, :, 0] == lowest_sse][:int(self.ncentroid),
+                             1:]
 
     def get_region(self):
         """
@@ -123,16 +124,31 @@ class KmeansClustering:
 
     def display_2d(self, dataset, clusters, labels):
         """display 3 differents plots"""
+        # concatenate dataset and cluster
+        labelled_data = np.concatenate((dataset, clusters), axis=1)
+        # display data
         plt.figure()
+        plt.subplots_adjust(hspace=0.7)
         plt.subplot(3,1,1)
-        plt.plot()
-        plt.title('height')
+        for i in range(int(self.ncentroid)):
+            data = labelled_data[labelled_data[:, 3] == i]
+            plt.scatter(data[:, 0], data[:, 1], marker='o',
+                       label=labels[i] if labels else None)
+        plt.title('height x weigh')
         plt.subplot(3,1,2)
-        plt.plot()
-        plt.title('weight')
+        for i in range(int(self.ncentroid)):
+            data = labelled_data[labelled_data[:, 3] == i]
+            plt.scatter(data[:, 1], data[:, 2], marker='o',
+                       label=labels[i] if labels else None)
+        plt.title('weight x bone density')
         plt.subplot(3,1,3)
-        plt.plot()
-        plt.title('bone density')
+        for i in range(int(self.ncentroid)):
+            data = labelled_data[labelled_data[:, 3] == i]
+            plt.scatter(data[:, 0], data[:, 2], marker='o',
+                       label=labels[i] if labels else None)
+        plt.title('bone density x height')
+        if labels:
+            plt.legend()
         plt.show()
 
     def display_3d(self, dataset, clusters, labels):
