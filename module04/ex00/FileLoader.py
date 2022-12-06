@@ -25,6 +25,12 @@ class FileLoader():
         except FileNotFoundError as exc:
             print(f"Error: {exc}")
             return None
+        except (pd.errors.ParserError,
+                pd.errors.EmptyDataError,
+                pd.errors.ParserWarning,
+                pd.errors.DtypeWarning) as exc:
+            print(f"Error: {exc}")
+            return None
 
         # Image information
         print(f"Loading dataset of dimensions "
