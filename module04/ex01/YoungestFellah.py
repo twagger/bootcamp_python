@@ -11,15 +11,16 @@ def youngestfellah(df: pd.DataFrame, year: int) -> dict:
     df = df.drop_duplicates(subset='ID')
     df = df.drop(['ID', 'Name', 'Height', 'Weight', 'Team', 'NOC', 'Games',
                   'Season', 'City', 'Sport', 'Event', 'Medal'], axis=1)
-    df.dropna(axis = 0)
+    df.dropna(axis=0)
     # Search in the dataframe
     df_year = df[df['Year'] == year]
     min_man = df_year[df_year['Sex'] == 'M']['Age'].min()
     min_woman = df_year[df_year['Sex'] == 'F']['Age'].min()
-    return { 'f': min_woman, 'm': min_man}
+    return {'f': min_woman, 'm': min_man}
+
 
 if __name__ == '__main__':
-    
+
     # Import file loader
     import sys
     sys.path.insert(1, '../ex00/')

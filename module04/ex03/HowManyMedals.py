@@ -19,7 +19,8 @@ def how_many_medals(df: pd.DataFrame, name: str) -> dict:
     # per medal, pd.Categorical on the Year force to display all years even if
     # there is no medal, and the unstack give the table the correct shape for
     # dict transform
-    df = df.groupby(["Medal", pd.Categorical(df.Year)])['Medal'].count().unstack()
+    df = df.groupby(["Medal",
+                     pd.Categorical(df.Year)])['Medal'].count().unstack()
     # Adding and ordering indexes for medals
     df = df.reindex(['Gold', 'Silver', 'Bronze'], fill_value=0)
     # Renaming indexes
@@ -38,7 +39,7 @@ if __name__ == '__main__':
     if data is None:
         print('Error with the file')
     else:
-        
+
         print(how_many_medals(data, 'Gary Abraham'))
         #  the output is:
         # "{1976: {'G': 0, 'S': 0, 'B': 0}, 1980: {'G': 0, 'S': 0, 'B': 1}}"
@@ -50,5 +51,5 @@ if __name__ == '__main__':
         print(how_many_medals(data, 'Kristin Otto'))
         #  the output is:
         # "{1988: {'G': 6, 'S': 0, 'B': 0}}"
-        
+
         print(how_many_medals(data, 'Kjetil Andr Aamodt'))

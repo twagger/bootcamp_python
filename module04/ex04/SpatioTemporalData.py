@@ -17,7 +17,6 @@ class SpatioTemporalData():
         if isinstance(location, str):
             return list(self.df[self.df['City'] == location].Year.unique())
 
-
     def where(self, date: int) -> list:
         """
         takes a date as an argument and returns the location where the
@@ -38,7 +37,7 @@ if __name__ == '__main__':
     if data is None:
         print('Error with the file')
     else:
-        
+
         sp = SpatioTemporalData(data)
 
         print(sp.where(2000))

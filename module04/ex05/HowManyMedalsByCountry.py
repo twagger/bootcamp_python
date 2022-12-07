@@ -9,8 +9,8 @@ def how_many_medals_by_country(df: pd.DataFrame, country: str) -> dict:
     delegation earned medals.
     """
     # Filter columns
-    df = df.drop(["ID","Name","Sex","Age","Height","Weight","NOC","Games",
-                  "Season","City"], axis=1)
+    df = df.drop(["ID", "Name", "Sex", "Age", "Height", "Weight", "NOC",
+                  "Games", "Season", "City"], axis=1)
     # Handle team sports
     team_sports = ['Basketball', 'Football',  'Tug-Of-War', 'Badminton',
                    'Sailing', 'Handball', 'Water Polo', 'Hockey', 'Rowing',
