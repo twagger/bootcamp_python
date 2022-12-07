@@ -52,6 +52,15 @@ class MyPlotLib():
 
     def box_plot(self, data: pd.DataFrame, features: list):
         """displays a box plot for each numerical variable in the dataset."""
+        if (not isinstance(data, pd.DataFrame)
+            or not isinstance(features, list)):
+            print('Error with parameters')
+            return
+        try:
+            data.boxplot(column=features)
+            plt.show()
+        except (TypeError, ValueError):
+            print(f'Error : no numeric data for {features}')
 
 
 if __name__ == '__main__':
@@ -83,7 +92,7 @@ if __name__ == '__main__':
         mpl.pair_plot(data, ['Weight', 'Height'])
         mpl.pair_plot(data, ['Age', 'Weight', 'Height'])
 
-        # # run the method box_plot with one, two and three valid features
-        # mpl.box_plot(data, features)
-        # mpl.box_plot(data, features)
-        # mpl.box_plot(data, features)
+        # run the method box_plot with one, two and three valid features
+        mpl.box_plot(data, ['Year'])
+        mpl.box_plot(data, ['Weight', 'Height'])
+        mpl.box_plot(data, ['Age', 'Weight', 'Height'])
