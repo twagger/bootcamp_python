@@ -9,6 +9,14 @@ def proportion_by_sport(df: pd.DataFrame,
     Function displaying the proportion of participants
     who played a given sport, among the participants of a given genders.
     """
+    # type checking
+    if (not isinstance(df, pd.DataFrame)
+            or not isinstance(year, int)
+            or not isinstance(sport, str)
+            or not isinstance(gender, str)
+            ):
+        print("Error with parameters")
+        return None
     # Clean and filter the data on necessary columns
     # df = df.drop_duplicates(subset='ID') < Commented to fit expected results.
     # explanation : an athlete registered in multiple sports on a year will
@@ -23,7 +31,7 @@ def proportion_by_sport(df: pd.DataFrame,
                             & (df['Sport'] == sport)
                             & (df['Sex'] == gender)].shape[0]
     try:
-        return df_year_sport_gend / df_year_gend
+        return float(df_year_sport_gend / df_year_gend)
     except ZeroDivisionError:
         return 0.0
 
