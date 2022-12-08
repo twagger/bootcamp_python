@@ -13,10 +13,10 @@ class FileLoader():
         """
         # Error management
         if args or kwargs:
-            print("Error: load > wrong number of arguments")
+            print("Error: load: wrong number of arguments")
             return None
         if path is None or not isinstance(path, str):
-            print("Error: load > a string is expected")
+            print("Error: load: a string is expected")
             return None
 
         # File loading
@@ -45,13 +45,13 @@ class FileLoader():
         """
         # Error management
         if args or kwargs:
-            print("Error: load > wrong number of arguments")
+            print("Error: display: wrong number of arguments")
             return None
         if df is None or not isinstance(df, pd.DataFrame):
-            print("Error: load > a panda dataframe is expected")
+            print("Error: display: a panda dataframe is expected")
             return None
         if n is None or not isinstance(n, int):
-            print("Error: load > an int is expected")
+            print("Error: display: an int is expected")
             return None
 
         if n >= 0:
