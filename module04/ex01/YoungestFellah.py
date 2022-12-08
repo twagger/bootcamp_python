@@ -7,6 +7,11 @@ def youngestfellah(df: pd.DataFrame, year: int) -> dict:
     The function returns a dictionary containing the age of the youngest woman
     and man who took part in the Olympics on that year.
     """
+    # type checking
+    if (not isinstance(df, pd.DataFrame)
+            or not isinstance(year, int)):
+        print("Error with parameters")
+        return None
     # Clean and filter the data on necessary columns
     df = df.drop_duplicates(subset='ID')
     df = df.drop(['ID', 'Name', 'Height', 'Weight', 'Team', 'NOC', 'Games',
