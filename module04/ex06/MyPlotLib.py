@@ -13,12 +13,17 @@ class MyPlotLib():
                 or not isinstance(features, list)):
             print('Error with parameters')
             return
-        for feature in features:
+        # filter non numerical features
+        features_cleaned = [feature for feature in features
+                            if pd.api.types.is_numeric_dtype(data[feature])]
+        # display
+        for idx, feature in enumerate(features_cleaned):
             try:
+                plt.subplot(1,len(features_cleaned),idx + 1)
                 data[feature].plot.hist(title=feature)
-                plt.show()
             except TypeError:
                 print(f'Error : no numeric data for {feature}')
+        plt.show()
 
     def density(self, data: pd.DataFrame, features: list):
         """plots the density curve of each numerical feature in the list"""
@@ -26,7 +31,10 @@ class MyPlotLib():
                 or not isinstance(features, list)):
             print('Error with parameters')
             return
-        for feature in features:
+        # filter non numerical features
+        features_cleaned = [feature for feature in features
+                            if pd.api.types.is_numeric_dtype(data[feature])]
+        for feature in features_cleaned:
             try:
                 data[feature].plot.density(legend=True)
             except TypeError:
@@ -43,10 +51,13 @@ class MyPlotLib():
                 or not isinstance(features, list)):
             print('Error with parameters')
             return
+        # filter non numerical features
+        features_cleaned = [feature for feature in features
+                            if pd.api.types.is_numeric_dtype(data[feature])]
         try:
-            pd.plotting.scatter_matrix(data[features])
+            pd.plotting.scatter_matrix(data[features_cleaned])
         except (TypeError, ValueError):
-            print(f'Error : no numeric data for {features}')
+            print(f'Error : no numeric data for {features_cleaned}')
         plt.show()
 
     def box_plot(self, data: pd.DataFrame, features: list):
@@ -55,11 +66,14 @@ class MyPlotLib():
                 or not isinstance(features, list)):
             print('Error with parameters')
             return
+        # filter non numerical features
+        features_cleaned = [feature for feature in features
+                            if pd.api.types.is_numeric_dtype(data[feature])]
         try:
-            data.boxplot(column=features)
+            data.boxplot(column=features_cleaned)
             plt.show()
         except (TypeError, ValueError):
-            print(f'Error : no numeric data for {features}')
+            print(f'Error : no numeric data for {features_cleaned}')
 
 
 if __name__ == '__main__':
@@ -79,6 +93,7 @@ if __name__ == '__main__':
         # run the method histogram with one, two and three valid features
         mpl.histogram(data, ['Year'])
         mpl.histogram(data, ['Year', 'Sex'])
+        mpl.histogram(data, ['Height', 'Weight'])
         mpl.histogram(data, ['Age', 'Height', 'Weight'])
 
         # run the method density with one, two and three valid features
