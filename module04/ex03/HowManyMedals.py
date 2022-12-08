@@ -12,6 +12,11 @@ def how_many_medals(df: pd.DataFrame, name: str) -> dict:
     The innermost values correspond to the number of medals of a given type won
     for a given year.
     """
+    # type checking
+    if (not isinstance(df, pd.DataFrame)
+            or not isinstance(name, str)):
+        print("Error with parameters")
+        return None
     # Filter the data on the name
     df = df[df['Name'] == name]
     # Create a proper dataframe grouped by the necessary infos
