@@ -8,6 +8,11 @@ def how_many_medals_by_country(df: pd.DataFrame, country: str) -> dict:
     giving the number and type of medal for each competition where the country
     delegation earned medals.
     """
+    # type checking
+    if (not isinstance(df, pd.DataFrame)
+            or not isinstance(country, str)):
+        print("Error with parameters")
+        return None
     # Filter columns
     df = df.drop(["ID", "Name", "Sex", "Age", "Height", "Weight", "NOC",
                   "Games", "Season", "City"], axis=1)
