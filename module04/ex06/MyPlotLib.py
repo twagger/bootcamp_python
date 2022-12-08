@@ -10,7 +10,7 @@ class MyPlotLib():
     def histogram(self, data: pd.DataFrame, features: list):
         """plots one histogram for each numerical feature in the list"""
         if (not isinstance(data, pd.DataFrame)
-            or not isinstance(features, list)):
+                or not isinstance(features, list)):
             print('Error with parameters')
             return
         for feature in features:
@@ -20,11 +20,10 @@ class MyPlotLib():
             except TypeError:
                 print(f'Error : no numeric data for {feature}')
 
-
     def density(self, data: pd.DataFrame, features: list):
         """plots the density curve of each numerical feature in the list"""
         if (not isinstance(data, pd.DataFrame)
-            or not isinstance(features, list)):
+                or not isinstance(features, list)):
             print('Error with parameters')
             return
         for feature in features:
@@ -41,7 +40,7 @@ class MyPlotLib():
         one. The main diagonal of this matrix shows simple histograms.
         """
         if (not isinstance(data, pd.DataFrame)
-            or not isinstance(features, list)):
+                or not isinstance(features, list)):
             print('Error with parameters')
             return
         try:
@@ -53,7 +52,7 @@ class MyPlotLib():
     def box_plot(self, data: pd.DataFrame, features: list):
         """displays a box plot for each numerical variable in the dataset."""
         if (not isinstance(data, pd.DataFrame)
-            or not isinstance(features, list)):
+                or not isinstance(features, list)):
             print('Error with parameters')
             return
         try:
